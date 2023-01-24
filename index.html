@@ -2,19 +2,22 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="style/style.css">
-		<script type="text/javascript" src="lang/pt.js"></script>
-		<script type="text/javascript" src="js/questions.js"></script>
+		<script type="text/javascript" src="dist/bundle.js"></script>
 		<meta charset="UTF-8">
 	</head>
 	<body>
-		<table id="table" style="width:100%;">
+		<table id="table">
 			<tbody>
 				<tr>
 					<td>
 						#
 					</td>
 					<td>
-						Actividad
+						Actividad 
+						<select id="lang">
+							<option value="es">Español</option>
+							<option value="pt" selected>Português</option>
+						</select>
 					</td>
 					<td>
 						Si
@@ -26,7 +29,7 @@
 			</tbody>
 		</table>
 		<br />
-		<input type="button" value="Procesar" class="btn_procesar" onclick="process()" />
+		<input type="button" value="Procesar" id="btn_procesar"  />
  		<div class="areas">
 		</div>
 	</body>
