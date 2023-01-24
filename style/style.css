@@ -1,30 +1,40 @@
+select {
+    float: right;
+    font-family: "Trebuchet MS", Tahoma, sans-serif;
+    background:black;
+    font-weight: bold;
+    color:#9c9c9c;
+}
 table {
-    width: 100%;
     border-collapse: collapse;
-    background: #34495e;
-    color: #f3f3f3;
+    background: #bababa;
+    color: #000000;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   td, th {
     padding: 8px;
     text-align: left;
+    font-family: "Trebuchet MS", Tahoma, sans-serif;
   }
 
   tr:nth-of-type(odd) {
     background:#d0d0d0;
-    color: black;
+    color: #000000;
     font-family: "Trebuchet MS", Tahoma, sans-serif;
   }
   
   th {
-    background: #2c3e50;
+    background: #d6d6d6;
     font-family: "Trebuchet MS", Tahoma, sans-serif;
   }
 
   tbody> tr:nth-of-type(1) {
     background:black;
     font-weight: bold;
-    color:#d0d0d0;
+    color:#9c9c9c;
     font-size: large;
   }
 
@@ -42,8 +52,9 @@ table {
   }
 
 
-.btn_procesar {
+#btn_procesar {
   display: inline-block;
+  margin-left: 15%;
   outline: 0;
   border: 0;
   cursor: pointer;
