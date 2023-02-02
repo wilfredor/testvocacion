@@ -1,8 +1,6 @@
 import $ from "cash-dom";
 import table from "./table";
 import lang_pt from "./lang/pt.json";
-import lang_es from "./lang/es.json";
-import lang_en from "./lang/en.json"
 import Relations from "./relations";
 import { Question } from "./question";
 import { Area } from "./area";
@@ -32,7 +30,7 @@ function porcent(x:number,area:number[])
 
 function process()
 {
-	if (radios_ok(lang.questions.length))
+	if (radiosValidation(lang.questions.length))
 	{
 		const counts = areasCount();
 		const porcents = counts.map((areaCount: number) => porcent(areaCount, counts));
@@ -40,7 +38,7 @@ function process()
 	}
 }
 
-function radios_ok(questions_size: number): boolean {
+function radiosValidation(questions_size: number): boolean {
 	for (let i = 0; i <= questions_size - 1; i++) {
 	  let radiogroup = document.getElementsByName(`question${i}`) as NodeListOf<HTMLInputElement>;
 	  const check_yes = radiogroup[0];
@@ -69,27 +67,26 @@ function writeQuestions ()
 {
 	$("#btn_procesar").on('click', () => process());
 	
-	$('#lang').on('change', async function() {
-		if ($('#lang').val()==="es")
-		    lang = lang_es;
-		else if ($('#lang').val()==="pt")
-			lang = lang_pt;
-		else if ($('#lang').val()==="en")
-			lang = lang_en;
-
+	$('#lang').on('change', async (combo:HTMLInputElement) => {
+		lang = await getLanguage(combo.value);
 		setQuestions(lang);
 	})
 
-	lang.questions.forEach((q,i) => table.addRow(i));
+	lang.questions.forEach((_q,i) => table.addRow(i));
 
 	setQuestions(lang);
 
 }
 
+async function getLanguage(lang: string):Promise<any> {
+	const url = `./lang/${lang}.json`;
+	const json = (await fetch(url)).text();
+	return json;
+  }
+
 function writeAreas(areasPorcent:number[]) {
 
 	const results = document.getElementsByClassName('areas')[0];
-
 	let areas:Area[] = [];
 
 	for (var i = 1; i < lang.areas.length; i++) {
@@ -112,9 +109,6 @@ function writeAreas(areasPorcent:number[]) {
 		results.appendChild(p);
 
 	});
-
-	
-
 
 	const table = document.getElementsByTagName("table")[0];
 	table.innerHTML = "";

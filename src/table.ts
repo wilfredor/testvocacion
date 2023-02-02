@@ -34,7 +34,6 @@ export default class Table {
         let radio = document.createElement("input");
         radio.type ='radio';
         radio.name = `question${(i)}`;
-        radio.checked = true;
         return radio;
     }
 }

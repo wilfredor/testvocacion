@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "moduleResolution" :"nodenext",
     "target": "es5",                                            
     "lib": [ "es6", "dom","ES2017"],                     
     "allowJs": true,
