@@ -67,8 +67,8 @@ function writeQuestions ()
 {
 	$("#btn_procesar").on('click', () => process());
 	
-	$('#lang').on('change', async (combo:HTMLInputElement) => {
-		lang = await getLanguage(combo.value);
+	$('#lang').on('change', async function(this:HTMLInputElement) {
+		lang = await getLanguage(this.value);
 		setQuestions(lang);
 	})
 
