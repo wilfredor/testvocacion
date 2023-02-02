@@ -1,11 +1,10 @@
 import $ from "cash-dom";
 import table from "./table";
-import lang_pt from "./lang/pt.json";
 import Relations from "./relations";
 import { Question } from "./question";
 import { Area } from "./area";
 
-let lang= lang_pt;
+let lang:any;
 
 function areasCount () {
 	let areasCount = [0, 0, 0, 0, 0];
@@ -53,35 +52,45 @@ function radiosValidation(questions_size: number): boolean {
 	return true;
   }
 
+function setHeaderText(activity:string) {
+	document.getElementById('Activity')!.innerHTML = activity;
+}
+
 function setQuestions(lang:any) {
-	let questions = document.querySelectorAll('tr:not(:first-child) td:nth-child(2)');
-	document.getElementById('Activity')!.innerHTML = lang.labels.Activity;
-	
-	questions.forEach(function (q, i) {
-	   let question = new Question(i+1,lang);
-	   q.innerHTML = question.description;
+	let questionsRow = document.querySelectorAll('tr:not(:first-child) td:nth-child(2)');
+
+	questionsRow.forEach(function (q, i) {
+	   let description = lang.questions.filter((question: { id: number; }) => question.id === (i+1))[0].description;
+	   q.innerHTML = description;
 	})
 }
 
-function writeQuestions ()
+async function writeQuestions ()
 {
+	
 	$("#btn_procesar").on('click', () => process());
 	
 	$('#lang').on('change', async function(this:HTMLInputElement) {
 		lang = await getLanguage(this.value);
 		setQuestions(lang);
+		setHeaderText(lang.labels.Activity);
 	})
 
-	lang.questions.forEach((_q,i) => table.addRow(i));
+	lang = await getLanguage("pt");
 
 	setQuestions(lang);
+	setHeaderText(lang.labels.Activity);
 
+	lang.questions.forEach((_q: any,i: number) => {
+		let question = new Question(i+1,lang);
+		table.addRow(i,question);
+	});
 }
 
 async function getLanguage(lang: string):Promise<any> {
-	const url = `./lang/${lang}.json`;
+	const url = `./src/lang/${lang}.json`;
 	const json = (await fetch(url)).text();
-	return json;
+	return JSON.parse(await json);
   }
 
 function writeAreas(areasPorcent:number[]) {

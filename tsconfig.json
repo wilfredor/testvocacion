@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+	"module": "commonjs",
     "moduleResolution" :"nodenext",
-    "target": "es5",                                            
+    "target": "es2017",                                            
     "lib": [ "es6", "dom","ES2017"],                     
     "allowJs": true,
     "outDir": "build",                          

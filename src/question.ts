@@ -4,7 +4,7 @@ import Relations from "./relations";
 
 export class Question {
     _id!: number;
-    _lang = lang_pt;
+    _lang!:any;
     
     constructor(id:number, lang:any) {
         this._id = id;
@@ -14,7 +14,7 @@ export class Question {
         return this.id;
     }
     get description():string {
-        return this._lang.questions.filter(question => question.id === this._id)[0].description;
+        return this._lang.questions.filter((question: { id: number; }) => question.id === this._id)[0].description;
     }
 
     get area():Area {

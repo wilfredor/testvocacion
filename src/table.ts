@@ -1,13 +1,14 @@
+import { Question } from "./question";
 
 export default class Table {
-    public static addRow(i: number) {
+    public static addRow(i: number, question:Question) {
         const tbody = document.getElementById("table")?.getElementsByTagName("tbody")[0];
         if (!tbody) return;
       
         const tr = document.createElement("tr");
         const cells = [
           i + 1,
-          '',
+          question.description,
           Table.createRadio(i),
           Table.createRadio(i)
         ];
