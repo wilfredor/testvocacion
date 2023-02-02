@@ -70,3 +70,8 @@ table {
       transform: translateY(-2px);
   }
 }
+
+.not {
+  /* flip vertically */
+  transform: scaleY(-1);
+}

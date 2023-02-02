@@ -1,109 +1,70 @@
-import $ from "cash-dom"
-import lang_pt from "./lang/pt.json"
-import lang_es from "./lang/es.json"
+import $ from "cash-dom";
+import table from "./table";
+import lang_pt from "./lang/pt.json";
+import lang_es from "./lang/es.json";
+import lang_en from "./lang/en.json"
+import Relations from "./relations";
+import { Question } from "./question";
+import { Area } from "./area";
 
-let lang = lang_pt;
-const area1 = [4,9,12,20,28,31,35,39,43,46,50,65,67,68,75,77];
-const area2 = [6,13,23,25,34,37,38,42,49,52,55,63,66,70,72,78];
-const area3 = [5,10,15,19,21,26,29,33,36,44,53,56,59,62,71,80];
-const area4 = [1,7,11,17,18,24,30,41,48,51,58,60,61,64,73,79];
-const area5 = [2,3,8,14,16,22,27,32,40,45,47,54,57,69,74,76];
+let lang= lang_pt;
 
-let a1 = 0; let a2 = 0; let a3 = 0; let a4 = 0; let a5 = 0;
-
-function areas (questions_size:number) {
-	for (let i=0;i<=questions_size-1;i++)
-		{
-			const questionCheckbox = $(`input[name="preguntas${i}"]`);
-
-			if (questionCheckbox.is(':checked'))
-			{
-				if (area1.includes(i+1)) a1++;
-				else if (area2.includes(i+1)) a2++;
-				else if (area3.includes(i+1)) a3++;
-				else if (area4.includes(i+1)) a4++;
-				else if (area5.includes(i+1)) a5++;
-			}
-		}
+function areasCount () {
+	let areasCount = [0, 0, 0, 0, 0];
+	const questionCheckboxes:Array<HTMLInputElement> = Array.from(document.querySelectorAll('input[name^="question"]'));
+	questionCheckboxes.forEach((checkbox, i) => {
+	  if ($(checkbox).is(":checked")) {
+		Relations.questionsInAreas().forEach((area, j) => {
+		  if (area.questionsId.includes(i+1)) {
+			areasCount[j]++;
+		  }
+		});
+	  }
+	});
+	return areasCount;
 }
 
-function porcent(x:number)
+function porcent(x:number,area:number[])
 {
-   return Math.floor((x*100)/(a1+a2+a3+a4+a5));
+   const sum =  area.reduce((a, b) => a + b, 0);
+   return Math.floor((x*100)/sum);
 }  
 
 function process()
 {
 	if (radios_ok(lang.questions.length))
 	{
-		areas(lang.questions.length);
-		writeAreas([porcent(a1),porcent(a2),porcent(a3),porcent(a4),porcent(a5)]);
+		const counts = areasCount();
+		const porcents = counts.map((areaCount: number) => porcent(areaCount, counts));
+		writeAreas(porcents);
 	}
 }
 
-function radios_ok(questions_size:number)
-{
-	for (let i=0;i<=questions_size-1;i++)
-	{
-		
-		let radiogroup = document.getElementsByName('preguntas'+i);
-		const check_yes = radiogroup[0] as HTMLInputElement;
-		const check_not = radiogroup[1] as HTMLInputElement;
-		if (!((check_yes.checked)||(check_not.checked)))
-		{
-			check_yes.focus();
-			alert ('Debe responder todas las preguntas, falta: '+Number(i+1));
-			return false;
-		}
+function radios_ok(questions_size: number): boolean {
+	for (let i = 0; i <= questions_size - 1; i++) {
+	  let radiogroup = document.getElementsByName(`question${i}`) as NodeListOf<HTMLInputElement>;
+	  const check_yes = radiogroup[0];
+	  const check_not = radiogroup[1];
+	  if (!(check_yes.checked || check_not.checked)) {
+		check_yes.focus();
+		check_yes.parentElement!.parentElement!.style.background = 'lightcoral';
+		alert(`${lang.labels.AllQuestionsNeedToBeAnswered} ${i + 1}`);
+		return false;
+	  }
 	}
 	return true;
-}
+  }
 
-function randownchecked()
-{
-	return (Math.floor(Math.random()*2));
-}
-
-function createRadio(i:number)
-{
-	let radio = document.createElement("input");
-	radio.type ='radio';
-	radio.name = `preguntas${(i)}`;
-	radio.checked = (Math.random() < 0.7);
-	return radio;
-}
-
-function setQuestions(langQuestions:string[]) {
+function setQuestions(lang:any) {
 	let questions = document.querySelectorAll('tr:not(:first-child) td:nth-child(2)');
+	document.getElementById('Activity')!.innerHTML = lang.labels.Activity;
 	
 	questions.forEach(function (q, i) {
-	   q.innerHTML = langQuestions[i];
+	   let question = new Question(i+1,lang);
+	   q.innerHTML = question.description;
 	})
-	
 }
-function addRow(i:number)
-{
-	var newRow = document.createElement("tr");
-	
-	var newCol1 = document.createElement("td");
-	var newCol2 = document.createElement("td");
-	var newCol3 = document.createElement("td");
-	var newCol4 = document.createElement("td");
-	
-	var numero = document.createTextNode(String(i+1));
 
-	newCol1.appendChild(numero);
-	newCol2.appendChild(document.createTextNode(("")));
-	newCol3.appendChild(createRadio(i));
-	newCol4.appendChild(createRadio(i));
-	
-	newRow.appendChild(newCol1);
-	newRow.appendChild(newCol2);
-	newRow.appendChild(newCol3);
-	newRow.appendChild(newCol4);  
-	
-	$("#table > tbody")[0]!.appendChild(newRow);
-}
 function writeQuestions ()
 {
 	$("#btn_procesar").on('click', () => process());
@@ -113,13 +74,15 @@ function writeQuestions ()
 		    lang = lang_es;
 		else if ($('#lang').val()==="pt")
 			lang = lang_pt;
+		else if ($('#lang').val()==="en")
+			lang = lang_en;
 
-		setQuestions(lang.questions);
+		setQuestions(lang);
 	})
 
-	lang.questions.forEach((q,i) => addRow(i));
+	lang.questions.forEach((q,i) => table.addRow(i));
 
-	setQuestions(lang.questions);
+	setQuestions(lang);
 
 }
 
@@ -127,16 +90,31 @@ function writeAreas(areasPorcent:number[]) {
 
 	const results = document.getElementsByClassName('areas')[0];
 
-	for (var i = 0; i <= 4; i++) {
+	let areas:Area[] = [];
+
+	for (var i = 1; i < lang.areas.length; i++) {
+	    let area = new Area(i,lang);
+		area.porcent = areasPorcent[i];
+		areas.push(area);
+	}
+
+	areas.sort((a, b) => (b.porcent > a.porcent ) ? 1 : -1);
+
+	areas.forEach((area)=>{
+
 		var h1 = document.createElement('h1');
 		var p = document.createElement('p');
 
-		h1.innerText = `${lang.areasEstudio[i]} ${areasPorcent[i]} %`;
-		p.innerText = lang.carreras[i];
+		h1.innerText = `${area.description} ${area.porcent} %`;
+		p.innerText = area.carreras;
 
 		results.appendChild(h1);
 		results.appendChild(p);
-	}
+
+	});
+
+	
+
 
 	const table = document.getElementsByTagName("table")[0];
 	table.innerHTML = "";
