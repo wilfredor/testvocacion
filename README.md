@@ -20,6 +20,8 @@ npm run build
 # serve dist/ with your preferred static server
 ```
 
+Demo: https://wilfredor.github.io/testvocacion/
+
 ## Scoring model
 - Model: Holland RIASEC.
 - Items: 48 (8 per dimension) inspired by O*NET Interest Profiler (public domain).
