@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "develop": "webpack --mode development",
-    "build": "rm -rf dist && mkdir -p dist && webpack --mode production && cp index.html dist/ && cp -R style dist/style && cp -R img dist/img"
+    "build": "rm -rf dist && mkdir -p dist && webpack --mode production && cp index.html dist/ && cp -R style dist/style"
   },
   "repository": {
     "type": "git",
