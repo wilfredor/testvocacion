@@ -1,6 +1,8 @@
 import lang_pt from "./lang/pt.json";
 import { Question } from "./question";
-import Relations from "./relations";
+import { getTestConfig } from "./tests";
+
+const CONFIG = getTestConfig();
 
 export class Area {
     _id!: number;
@@ -21,14 +23,14 @@ export class Area {
         return this._id.toString();
     }
     get description():string {
-        return this._lang.areas.filter(area => area.id === this._id)[0].description;
+        return this._lang.areas.filter((area: { id: number; description: string; }) => area.id === this._id)[0].description;
     }
     get carreras():string {
         return this._lang.carreras[this._id-1].description;
     }
     get questions():Question[]{
-        let questions:Question[] = [];
-        let questionsIds = Relations.questionsInAreas().filter(relation => relation.areaId === this._id)[0].questionsId;
+        const questions:Question[] = [];
+        const questionsIds = CONFIG.items.filter(item => item.areaId === this._id).map(item => item.id);
         questionsIds.forEach((questionId) => {
             questions.push(new Question(questionId, this._lang));
         });

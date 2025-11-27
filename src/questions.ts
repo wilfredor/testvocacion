@@ -1,33 +1,29 @@
 import $ from "cash-dom";
 import table from "./table";
-import Relations from "./relations";
 import { Question } from "./question";
 import { Area } from "./area";
 import langEn from "./lang/en.json";
 import langEs from "./lang/es.json";
 import langPt from "./lang/pt.json";
+import { scoringStrategies } from "./scoring";
+import { getTestConfig } from "./tests";
+import { TestConfig } from "./types";
 
-const PAGE_SIZE = 15;
+const CONFIG: TestConfig = getTestConfig();
+const PAGE_SIZE = CONFIG.pageSize;
 let lang:any;
 let currentPage = 1;
 let totalPages = 1;
 
 function areasCount () {
-	let areasCount = new Array(lang.areas.length).fill(0);
-	const relations = Relations.questionsInAreas();
-	lang.questions.forEach((_q:any, index:number) => {
-		const questionId = index + 1;
+	const answers:Record<number, boolean> = {};
+	CONFIG.items.forEach((item, index) => {
 		const radioGroup = document.getElementsByName(`question${index}`) as NodeListOf<HTMLInputElement>;
 		const yesOption = radioGroup[0];
-		if (yesOption && yesOption.checked) {
-			relations.forEach((area, j) => {
-				if (area.questionsId.includes(questionId)) {
-					areasCount[j]++;
-				}
-			});
-		}
+		answers[item.id] = !!(yesOption && yesOption.checked);
 	});
-	return areasCount;
+	const strategy = scoringStrategies[CONFIG.scoringStrategy];
+	return strategy ? strategy.score(CONFIG, answers) : [];
 }
 
 function porcent(x:number,area:number[])
@@ -39,7 +35,7 @@ function porcent(x:number,area:number[])
 
 function process()
 {
-	if (radiosValidation(lang.questions.length))
+	if (radiosValidation(CONFIG.items.length))
 	{
 		hideNotice();
 		const counts = areasCount();
@@ -90,14 +86,14 @@ function setQuestions(lang:any) {
 	let questionsRow = document.querySelectorAll('.question-row .question-text');
 
 	questionsRow.forEach(function (q, i) {
-	   let description = lang.questions.filter((question: { id: number; }) => question.id === (i+1))[0].description;
+	   const questionId = CONFIG.items[i]?.id ?? (i+1);
+	   let description = lang.questions.filter((question: { id: number; }) => question.id === questionId)[0].description;
 	   q.innerHTML = description;
 	})
 }
 
 function updatePaginationMeta() {
-	const rows = document.querySelectorAll('.question-row');
-	totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+	totalPages = Math.max(1, Math.ceil(CONFIG.items.length / PAGE_SIZE));
 }
 
 function showPage(page:number) {
@@ -151,8 +147,8 @@ async function writeQuestions ()
 	lang = await getLanguage("pt");
 
 	setStaticText(lang);
-	lang.questions.forEach((_q: any,i: number) => {
-		let question = new Question(i+1,lang);
+	CONFIG.items.forEach((item, i) => {
+		let question = new Question(item.id,lang);
 		table.addRow(i,question,{yes: lang.labels.Yes, no: lang.labels.No});
 	});
 	setQuestions(lang);

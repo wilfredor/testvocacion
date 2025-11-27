@@ -1,6 +1,8 @@
 import { Area } from "./area";
 import lang_pt from "./lang/pt.json";
-import Relations from "./relations";
+import { getTestConfig } from "./tests";
+
+const CONFIG = getTestConfig();
 
 export class Question {
     _id!: number;
@@ -18,7 +20,8 @@ export class Question {
     }
 
     get area():Area {
-        return new Area(Relations.questionsInAreas().filter(relation => relation.questionsId.includes(this._id))[0].areaId,this._lang);
+        const areaId = CONFIG.items.find(item => item.id === this._id)?.areaId ?? 1;
+        return new Area(areaId,this._lang);
     }
 
 }
