@@ -1,336 +1,64 @@
-import $ from "cash-dom";
-import table from "./table";
-import { Question } from "./question";
-import { Area } from "./area";
+import { TestController } from "./controller";
+import langAr from "./lang/ar.json";
+import langDe from "./lang/de.json";
 import langEn from "./lang/en.json";
 import langEs from "./lang/es.json";
+import langFr from "./lang/fr.json";
+import langHi from "./lang/hi.json";
+import langIt from "./lang/it.json";
+import langJa from "./lang/ja.json";
+import langNl from "./lang/nl.json";
 import langPt from "./lang/pt.json";
-import { scoringStrategies } from "./scoring";
-import { getTestConfig } from "./tests";
+import langRu from "./lang/ru.json";
+import langZh from "./lang/zh.json";
+import { DomRenderer } from "./renderer";
 import { AnswerStore } from "./state";
-import { TestConfig } from "./types";
-import { UI, qs, qsa } from "./ui";
+import { getTestConfig } from "./tests";
+import { Lang, TestConfig } from "./types";
+import { UI } from "./ui";
 
 const CONFIG: TestConfig = getTestConfig();
-const PAGE_SIZE = CONFIG.pageSize;
-let lang:any;
-let currentPage = 1;
-let totalPages = 1;
 const answerStore = new AnswerStore(CONFIG);
+const renderer = new DomRenderer(UI);
+const controller = new TestController(CONFIG, renderer, answerStore, getLanguage);
 
-function areasCount () {
-	const strategy = scoringStrategies[CONFIG.scoringStrategy];
-	return strategy ? strategy.score(CONFIG, answerStore.toRecord()) : [];
+async function getLanguage(lang: string): Promise<Lang> {
+  const langs: Record<string, Lang> = {
+    en: langEn,
+    es: langEs,
+    pt: langPt,
+    fr: langFr,
+    de: langDe,
+    it: langIt,
+    nl: langNl,
+    zh: langZh,
+    ja: langJa,
+    ar: langAr,
+    hi: langHi,
+    ru: langRu,
+  };
+  return langs[lang] ?? langs.pt;
 }
 
-function porcent(x:number,area:number[])
-{
-   const sum =  area.reduce((a, b) => a + b, 0);
-   if (sum === 0) return 0;
-   return Math.floor((x*100)/sum);
-}  
+function wireUi() {
+  const processBtn = document.getElementById("btn_procesar");
+  const prevBtn = document.getElementById("btn_prev");
+  const nextBtn = document.getElementById("btn_next");
+  const langSelect = document.getElementById("lang") as HTMLSelectElement | null;
 
-function process()
-{
-	if (radiosValidation(CONFIG.items.length))
-	{
-		hideNotice();
-		const counts = areasCount();
-		const porcents = counts.map((areaCount: number) => porcent(areaCount, counts));
-		writeAreas(porcents, counts);
-	}
+  processBtn?.addEventListener("click", () => controller.process());
+  prevBtn?.addEventListener("click", () => controller.handleNavigate(-1));
+  nextBtn?.addEventListener("click", () => controller.handleNavigate(1));
+
+  langSelect?.addEventListener("change", async (event) => {
+    const target = event.target as HTMLSelectElement;
+    await controller.changeLanguage(target.value);
+  });
 }
 
-function radiosValidation(questions_size: number): boolean {
-	hideNotice();
-	for (let i = 0; i <= questions_size - 1; i++) {
-	  let radiogroup = document.getElementsByName(`question${i}`) as NodeListOf<HTMLInputElement>;
-	  const check_yes = radiogroup[0];
-	  const check_not = radiogroup[1];
-	  const row = check_yes?.closest(".question-row");
-	  if (row) row.classList.remove("row-error");
-	  if (!(check_yes.checked || check_not.checked)) {
-		check_yes.focus();
-		if (row) row.classList.add("row-error");
-		showNotice(`${lang.labels.AllQuestionsNeedToBeAnswered} ${i + 1}`);
-		return false;
-	  }
-	}
-	return true;
+async function bootstrap() {
+  wireUi();
+  await controller.init("pt");
 }
 
-function setHeaderText(activity:string) {
-	document.getElementById('Activity')!.innerHTML = activity;
-}
-
-function setStaticText(lang:any) {
-	setHeaderText(lang.labels.Activity);
-	qs(UI.heroEyebrow)!.textContent = lang.labels.HeroEyebrow;
-	qs(UI.heroTitle)!.textContent = lang.labels.HeroTitle;
-	qs(UI.heroSubtitle)!.textContent = lang.labels.HeroSubtitle;
-	const yesLabel = qs(UI.yesLabel);
-	if (yesLabel) yesLabel.textContent = lang.labels.Yes;
-	const processBtn = qs<HTMLInputElement>(UI.processBtn);
-	if (processBtn) processBtn.value = lang.labels.ProcessButton;
-	qs(UI.resultsTitle)!.textContent = lang.labels.ResultsTitle;
-	const prevBtn = qs<HTMLButtonElement>(UI.prevBtn);
-	const nextBtn = qs<HTMLButtonElement>(UI.nextBtn);
-	if (prevBtn) prevBtn.textContent = lang.labels.Prev;
-	if (nextBtn) nextBtn.textContent = lang.labels.Next;
-	const langSelect = qs(UI.langSelect);
-	if (langSelect) langSelect.setAttribute('aria-label', lang.labels.Language);
-}
-
-function setQuestions(lang:any) {
-	let questionsRow = qsa('.question-row .question-text');
-
-	questionsRow.forEach(function (q, i) {
-	   const questionId = CONFIG.items[i]?.id ?? (i+1);
-	   let description = lang.questions.filter((question: { id: number; }) => question.id === questionId)[0].description;
-	   q.innerHTML = description;
-	})
-}
-
-function updatePaginationMeta() {
-	totalPages = Math.max(1, Math.ceil(CONFIG.items.length / PAGE_SIZE));
-}
-
-function showPage(page:number) {
-	updatePaginationMeta();
-	currentPage = Math.min(Math.max(page, 1), totalPages);
-	const rows = document.querySelectorAll('.question-row');
-	const start = (currentPage - 1) * PAGE_SIZE;
-	const end = start + PAGE_SIZE;
-	rows.forEach((row, idx) => {
-		(row as HTMLElement).classList.toggle("hidden", idx < start || idx >= end);
-	});
-	updatePagerUI();
-}
-
-function changePage(delta:number) {
-	showPage(currentPage + delta);
-	window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function updatePagerUI() {
-	const pageText = document.getElementById('page-text');
-	if (pageText) pageText.textContent = `${lang.labels.Page} ${currentPage}/${totalPages}`;
-	const prev = document.getElementById('btn_prev') as HTMLButtonElement | null;
-	const next = document.getElementById('btn_next') as HTMLButtonElement | null;
-	if (prev) prev.disabled = currentPage <= 1;
-	if (next) next.disabled = currentPage >= totalPages;
-	const processBtn = document.getElementById('btn_procesar') as HTMLInputElement | null;
-	if (processBtn) {
-		const allAnswered = answerStore.areAllAnswered();
-		processBtn.style.display = currentPage >= totalPages && allAnswered ? "inline-block" : "none";
-	}
-}
-
-async function writeQuestions ()
-{
-	
-	$("#btn_procesar").on('click', () => process());
-	$("#btn_prev").on('click', () => changePage(-1));
-	$("#btn_next").on('click', () => changePage(1));
-		
-	$('#lang').on('change', async function(this:HTMLInputElement) {
-		lang = await getLanguage(this.value);
-		setStaticText(lang);
-		setQuestions(lang);
-		resetResults();
-		hideNotice();
-		updateProgressBar();
-		showPage(1);
-	})
-
-	lang = await getLanguage("pt");
-
-	setStaticText(lang);
-	CONFIG.items.forEach((item, i) => {
-		let question = new Question(item.id,lang);
-		table.addRow(i,question,{yes: lang.labels.Yes, no: lang.labels.No});
-	});
-	setQuestions(lang);
-	resetResults();
-	hideNotice();
-	attachRadioListeners();
-	updatePaginationMeta();
-	showPage(1);
-	updateProgressBar();
-	updatePagerUI();
-}
-
-async function getLanguage(lang: string):Promise<any> {
-	const langs:any = {
-		en: langEn,
-		es: langEs,
-		pt: langPt
-	}
-	return langs[lang] ?? langs.pt;
-  }
-
-function writeAreas(areasPorcent:number[], counts:number[]) {
-
-	const results = document.getElementsByClassName('areas')[0];
-	const resultsSection = document.querySelector('.results') as HTMLElement | null;
-	results.innerHTML = "";
-	let areas:Area[] = [];
-
-	for (let i = 0; i < lang.areas.length; i++) {
-	    let area = new Area(lang.areas[i].id,lang);
-		area.porcent = areasPorcent[i] ?? 0;
-		areas.push(area);
-	}
-
-	areas.sort((a, b) => (b.porcent > a.porcent ) ? 1 : -1);
-
-	areas.forEach((area, idx)=>{
-		const card = document.createElement("div");
-		card.className = "area-card";
-		if (idx < 3) card.classList.add("top");
-
-		const badge = document.createElement("div");
-		badge.className = "badge-rank";
-		badge.textContent = `#${idx+1}`;
-
-		const titleRow = document.createElement("div");
-		titleRow.className = "area-title-row";
-
-		const h1 = document.createElement('h1');
-		h1.className = "area-name";
-		h1.innerText = area.description;
-
-		const percent = document.createElement("div");
-		percent.className = "area-percent";
-		const questionsPerArea = lang.questions.length / lang.areas.length;
-		const countValue = counts[lang.areas.findIndex((a:any)=>a.id===area._id)] ?? 0;
-		percent.innerText = `${area.porcent}% (${countValue}/${questionsPerArea})`;
-
-		titleRow.appendChild(h1);
-		titleRow.appendChild(percent);
-
-		const bar = document.createElement("div");
-		bar.className = "bar";
-		const barFill = document.createElement("div");
-		barFill.className = "bar-fill";
-		barFill.style.width = `${area.porcent}%`;
-		bar.appendChild(barFill);
-
-		const desc = document.createElement("p");
-		desc.className = "area-description";
-		desc.innerText = area.carreras;
-
-		const toggle = document.createElement("button");
-		toggle.className = "toggle-desc";
-		toggle.textContent = lang.labels.ShowCareers;
-		toggle.addEventListener("click", () => {
-			const expanded = card.classList.toggle("expanded");
-			toggle.textContent = expanded ? lang.labels.HideCareers : lang.labels.ShowCareers;
-		});
-
-		card.appendChild(badge);
-		card.appendChild(titleRow);
-		card.appendChild(bar);
-		card.appendChild(toggle);
-		card.appendChild(desc);
-
-		if (idx >= 3) card.classList.add("hidden");
-
-		results.appendChild(card);
-	});
-
-	const methodNote = document.createElement("div");
-	methodNote.className = "method-note";
-	methodNote.textContent = buildMethodSummary(areas, counts);
-	results.appendChild(methodNote);
-
-	if (resultsSection) {
-		resultsSection.classList.remove('hidden');
-		resultsSection.classList.add('visible');
-	}
-
-	var button = document.getElementById("btn_procesar") as HTMLInputElement;
-	button.style.display = "inline-block";
-}
-
-function resetResults() {
-	const results = document.getElementsByClassName('areas')[0];
-	const resultsSection = document.querySelector('.results') as HTMLElement | null;
-	results.innerHTML = "";
-	if (resultsSection) {
-		resultsSection.classList.add('hidden');
-		resultsSection.classList.remove('visible');
-	}
-	const button = document.getElementById("btn_procesar") as HTMLInputElement | null;
-	if (button) button.style.display = "inline-block";
-}
-
-function randomFill() {
-	for (let i = 0; i < lang.questions.length; i++) {
-		const radios = document.getElementsByName(`question${i}`) as NodeListOf<HTMLInputElement>;
-		const yes = radios[0];
-		const no = radios[1];
-		const chooseYes = Math.random() >= 0.5;
-		if (yes) yes.checked = chooseYes;
-		if (no) no.checked = !chooseYes;
-		const row = yes?.closest(".question-row");
-		if (row) row.classList.remove("row-error");
-	}
-	updateProgressBar();
-}
-
-function showNotice(message:string) {
-	const notice = document.getElementById("notice");
-	if (!notice) return;
-	notice.textContent = message;
-	notice.classList.remove("hidden");
-}
-
-function hideNotice() {
-	const notice = document.getElementById("notice");
-	if (!notice) return;
-	notice.textContent = "";
-	notice.classList.add("hidden");
-}
-
-function attachRadioListeners() {
-	const radios = document.querySelectorAll('input[type=radio]');
-	radios.forEach((radio) => {
-		radio.addEventListener('change', () => {
-			const name = (radio as HTMLInputElement).name;
-			const match = name.match(/question(\\d+)/);
-			if (match) {
-				const index = parseInt(match[1], 10);
-				const itemId = CONFIG.items[index]?.id ?? index + 1;
-				const isYes = (radio as HTMLInputElement).value === "yes";
-				answerStore.setAnswer(itemId, isYes);
-			}
-			const row = (radio as HTMLInputElement).closest(".question-row");
-			if (row) row.classList.remove("row-error");
-			hideNotice();
-			updateProgressBar();
-		});
-	});
-}
-
-function updateProgressBar() {
-	const total = CONFIG.items.length;
-	const answered = answerStore.answeredCount();
-	const progressText = document.getElementById('progress-text');
-	if (progressText) progressText.textContent = `${lang.labels.Answered} ${answered}/${total}`;
-	const bar = document.getElementById('progress-bar-inner') as HTMLElement | null;
-	if (bar) bar.style.width = `${Math.round((answered / total) * 100)}%`;
-	updatePagerUI();
-}
-
-function buildMethodSummary(areas:Area[], counts:number[]): string {
-	const total = lang.questions.length;
-	const answered = answerStore.answeredCount();
-	const topCode = areas.slice(0,3).map(a => a.description.charAt(0)).join('');
-	const base = lang.labels.MethodNote;
-	const prefix = `${lang.labels.MethodSummaryPrefix} ${answered}/${total}.`;
-	const code = `${lang.labels.MethodSummaryCode}: ${topCode}.`;
-	const scoring = lang.labels.MethodSummaryScoring;
-	return `${base} ${prefix} ${code} ${scoring}`;
-}
-window.onload = writeQuestions;
+window.onload = bootstrap;

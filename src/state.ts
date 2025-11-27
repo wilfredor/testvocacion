@@ -13,6 +13,14 @@ export class AnswerStore {
     this.answers.set(itemId, value);
   }
 
+  hasAnswer(itemId: number): boolean {
+    return this.answers.has(itemId);
+  }
+
+  getAnswer(itemId: number): boolean | undefined {
+    return this.answers.get(itemId);
+  }
+
   answeredCount(): number {
     return this.answers.size;
   }
@@ -41,5 +49,9 @@ export class AnswerStore {
       result[key] = value;
     });
     return result;
+  }
+
+  clear() {
+    this.answers.clear();
   }
 }

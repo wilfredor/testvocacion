@@ -1,15 +1,16 @@
 import lang_pt from "./lang/pt.json";
 import { Question } from "./question";
 import { getTestConfig } from "./tests";
+import { Lang } from "./types";
 
 const CONFIG = getTestConfig();
 
 export class Area {
     _id!: number;
-    _lang = lang_pt;
+    _lang: Lang = lang_pt;
     _porcent!: number;
     
-    constructor(id:number, lang:any) {
+    constructor(id:number, lang:Lang) {
         this._id = id;
         this._lang = lang;
     }
@@ -23,10 +24,10 @@ export class Area {
         return this._id.toString();
     }
     get description():string {
-        return this._lang.areas.filter((area: { id: number; description: string; }) => area.id === this._id)[0].description;
+        return this._lang.areas.find((area) => area.id === this._id)?.description ?? "";
     }
     get carreras():string {
-        return this._lang.carreras[this._id-1].description;
+        return this._lang.carreras[this._id-1]?.description ?? "";
     }
     get questions():Question[]{
         const questions:Question[] = [];

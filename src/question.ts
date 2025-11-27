@@ -1,14 +1,14 @@
 import { Area } from "./area";
-import lang_pt from "./lang/pt.json";
 import { getTestConfig } from "./tests";
+import { Lang } from "./types";
 
 const CONFIG = getTestConfig();
 
 export class Question {
     _id!: number;
-    _lang!:any;
+    _lang!:Lang;
     
-    constructor(id:number, lang:any) {
+    constructor(id:number, lang:Lang) {
         this._id = id;
         this._lang = lang;
     }
@@ -16,7 +16,7 @@ export class Question {
         return this._id.toString();
     }
     get description():string {
-        return this._lang.questions.filter((question: { id: number; }) => question.id === this._id)[0].description;
+        return this._lang.questions.find((question) => question.id === this._id)?.description ?? "";
     }
 
     get area():Area {
