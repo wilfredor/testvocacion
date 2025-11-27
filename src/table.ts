@@ -1,8 +1,9 @@
 import { Question } from "./question";
+import { UI, qs } from "./ui";
 
 export default class Table {
     public static addRow(i: number, question:Question, labels:{yes:string,no:string}) {
-        const list = document.getElementById("question-list");
+        const list = qs(UI.questionList);
         if (!list) return;
 
         const row = document.createElement("div");

@@ -9,6 +9,7 @@ import { scoringStrategies } from "./scoring";
 import { getTestConfig } from "./tests";
 import { AnswerStore } from "./state";
 import { TestConfig } from "./types";
+import { UI, qs, qsa } from "./ui";
 
 const CONFIG: TestConfig = getTestConfig();
 const PAGE_SIZE = CONFIG.pageSize;
@@ -64,22 +65,24 @@ function setHeaderText(activity:string) {
 
 function setStaticText(lang:any) {
 	setHeaderText(lang.labels.Activity);
-	document.getElementById('hero-eyebrow')!.textContent = lang.labels.HeroEyebrow;
-	document.getElementById('hero-title')!.textContent = lang.labels.HeroTitle;
-	document.getElementById('hero-subtitle')!.textContent = lang.labels.HeroSubtitle;
-	const yesLabel = document.getElementById('yes-label');
+	qs(UI.heroEyebrow)!.textContent = lang.labels.HeroEyebrow;
+	qs(UI.heroTitle)!.textContent = lang.labels.HeroTitle;
+	qs(UI.heroSubtitle)!.textContent = lang.labels.HeroSubtitle;
+	const yesLabel = qs(UI.yesLabel);
 	if (yesLabel) yesLabel.textContent = lang.labels.Yes;
-	const processBtn = document.getElementById('btn_procesar') as HTMLInputElement | null;
+	const processBtn = qs<HTMLInputElement>(UI.processBtn);
 	if (processBtn) processBtn.value = lang.labels.ProcessButton;
-	document.getElementById('results-title')!.textContent = lang.labels.ResultsTitle;
-	document.getElementById('btn_prev')!.textContent = lang.labels.Prev;
-	document.getElementById('btn_next')!.textContent = lang.labels.Next;
-	const langSelect = document.getElementById('lang');
+	qs(UI.resultsTitle)!.textContent = lang.labels.ResultsTitle;
+	const prevBtn = qs<HTMLButtonElement>(UI.prevBtn);
+	const nextBtn = qs<HTMLButtonElement>(UI.nextBtn);
+	if (prevBtn) prevBtn.textContent = lang.labels.Prev;
+	if (nextBtn) nextBtn.textContent = lang.labels.Next;
+	const langSelect = qs(UI.langSelect);
 	if (langSelect) langSelect.setAttribute('aria-label', lang.labels.Language);
 }
 
 function setQuestions(lang:any) {
-	let questionsRow = document.querySelectorAll('.question-row .question-text');
+	let questionsRow = qsa('.question-row .question-text');
 
 	questionsRow.forEach(function (q, i) {
 	   const questionId = CONFIG.items[i]?.id ?? (i+1);
@@ -129,7 +132,7 @@ async function writeQuestions ()
 	$("#btn_procesar").on('click', () => process());
 	$("#btn_prev").on('click', () => changePage(-1));
 	$("#btn_next").on('click', () => changePage(1));
-	
+		
 	$('#lang').on('change', async function(this:HTMLInputElement) {
 		lang = await getLanguage(this.value);
 		setStaticText(lang);
