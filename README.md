@@ -1,17 +1,43 @@
-# Testvocacion
+# Testvocacion (RIASEC Orientation)
 
-A vocational test is a questionnaire or series of tests designed to help a person determine their interests, skills, and aptitudes in relation to different careers or occupations. The goal is to provide information and guidance on the career options that may be most suitable for the person, based on their strengths and personal preferences. These tests are commonly used by young people who are trying to decide which path to follow after high school, or by adults who are seeking a career change.
+Interactive vocational interest questionnaire using a simplified, public-domain RIASEC (Holland) item set. It presents 48 items (8 per dimension), paginated with inline Yes/No toggles, and generates a ranked RIASEC profile with brief career hints.
 
-[demo](https://wilfredor.github.io/testvocacion/)
+## Features
+- RIASEC-based item set (Realistic, Investigative, Artistic, Social, Enterprising, Conventional); items inspired by the public O*NET Interest Profiler.
+- Inline Yes/No segmented toggles, paginated flow; “Process results” only shows on the last page when all items are answered.
+- Results ranked by percentage and count per dimension, with a method note summarizing the model and top code.
+- Multilingual: Español, English, Português (aria-label on language selector).
+- Static build via webpack; no backend required.
 
-## Importante
+## Quick start
+```bash
+npm install
+npm run develop   # dev server on http://localhost:4000
+```
+For a static build:
+```bash
+npm run build
+# serve dist/ with your preferred static server
+```
 
-- Este instrumento es orientativo; no es una evaluación vocacional con validación psicométrica.
-- No sustituye la consulta con profesionales de orientación vocacional, psicología o psiquiatría.
-- Las preguntas ahora siguen un esquema simplificado tipo RIASEC (basado en ítems públicos) y el scoring es suma/promedio por área; no hay ponderaciones ni normas poblacionales.
+## Scoring model
+- Model: Holland RIASEC.
+- Items: 48 (8 per dimension) inspired by O*NET Interest Profiler (public domain).
+- Scoring: sum of “Yes” per dimension; percentages = yes_count / answered_count * 100; ordered descending. Top code shown in the results note.
+- No norms, weights, or psychometric validation are provided.
 
-## Próximos pasos recomendados (científico/metodológicos)
+## Limitations
+- Orientation-only; not a clinically validated assessment.
+- No acquiescence control, no reliability metrics, no normative samples.
+- Career texts are brief hints, not prescriptions.
 
-- Documentar origen y marco teórico de los ítems, revisión de expertos y adaptación cultural/es/en/pt.
-- Ejecutar estudios de confiabilidad (alfa/omega), validez de constructo/criterio e invarianza entre idiomas.
-- Definir normas y puntos de referencia con muestras relevantes; ajustar el modelo de puntuación y umbrales.
+## Roadmap ideas
+- Likert scale (5-point) instead of binary toggles to capture intensity.
+- Add acquiescence and consistency checks.
+- Persist responses locally and allow exporting a PDF summary.
+- Collect anonymized responses (opt-in) to compute reliability/validity metrics and derive basic norms.
+
+## Tech stack
+- TypeScript + webpack
+- cash-dom for light DOM handling
+- Vanilla CSS
