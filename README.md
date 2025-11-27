@@ -1,12 +1,19 @@
 # Testvocacion (RIASEC Orientation)
 
-Interactive vocational interest questionnaire using a simplified, public-domain RIASEC (Holland) item set. It presents 48 items (8 per dimension), paginated with inline Yes/No toggles, and generates a ranked RIASEC profile with brief career hints.
+Interactive questionnaire engine using a config-driven RIASEC (Holland) item set. It renders 48 items (8 per dimension), paginated with inline Yes/No toggles, and produces a ranked profile with brief career hints. The flow is decoupled into domain (config + scoring), controller, and renderer layers to support future test types and UIs.
+
+### Extensible to other tests
+- Swap the config (items, areas, scoring strategy, page size) to support other interest/value/competency questionnaires.
+- Add scoring strategies (e.g., Likert averages, weighted scores, branching) without touching UI.
+- Plug another renderer (Preact/Svelte or server-rendered) while reusing domain + controller.
 
 ## Features
-- RIASEC-based item set (Realistic, Investigative, Artistic, Social, Enterprising, Conventional); items inspired by the public O*NET Interest Profiler.
-- Inline Yes/No segmented toggles, paginated flow; “Process results” only shows on the last page when all items are answered.
+- Config-driven tests: `configs`/`src/config.ts` defines the test (items, areas, page size, scoring strategy).
+- RIASEC item set (Realistic, Investigative, Artistic, Social, Enterprising, Conventional) inspired by the public O*NET Interest Profiler.
+- Inline Yes/No segmented toggles; “Process results” only appears on the last page when all items are answered. Language switches preserve answers and relabel the UI.
 - Results ranked by percentage and count per dimension, with a method note summarizing the model and top code.
-- Multilingual: Español, English, Português (aria-label on language selector).
+- Multilingual: Español, English, Português plus extra options (fr, de, it, nl, zh, ja, ar, hi, ru) currently mapped to English content pending translation.
+- Architecture: domain (config + scoring + answer store), controller (flow/orchestration), renderer (DOM implementation). Swap renderer for another UI (e.g., Preact/Svelte) without touching domain.
 - Static build via webpack; no backend required.
 
 ## Quick start
