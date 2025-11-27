@@ -22,7 +22,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   devServer: {
-    static: path.join(__dirname, "dist"),
+    static: path.join(__dirname, "."),
     compress: true,
     port: 4000,
   },

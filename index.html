@@ -1,38 +1,61 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
+<!DOCTYPE html> 
 <html>
 	<head>
 		<title>TestVocation</title>
-		<link rel="stylesheet" type="text/css" href="style/style.css">
-		<script type="text/javascript" src="dist/bundle.js"></script>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="style/style.css">
+		<script type="text/javascript" src="bundle.js"></script>
 	</head>
 	<body>
-		<table id="table">
-			<tbody>
-				<tr>
-					<td>
-						#
-					</td>
-					<td>
-						<span id="Activity"></span> 
-						<select id="lang">
-							<option value="es">Español</option>
-							<option value="en">English</option>
-							<option value="pt" selected>Português</option>
-						</select>
-					</td>
-					<td>
-					   <img src="img/like_icon.svg" />
-					</td>
-					<td>
-						<img src="img/like_icon.svg" class="not" />
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<br />
-		<input type="button" value="Procesar" id="btn_procesar"  />
- 		<div class="areas">
+		<div class="page">
+			<header class="hero">
+				<div>
+					<p class="eyebrow" id="hero-eyebrow">Orientación vocacional</p>
+					<h1 id="hero-title">Identifica tu perfil de intereses RIASEC</h1>
+					<p class="lede" id="hero-subtitle">Completa el cuestionario y revisa tus áreas según tus respuestas.</p>
+				</div>
+				<div class="lang-switcher">
+					<select id="lang" aria-label="Language">
+						<option value="es">Español</option>
+						<option value="en">English</option>
+						<option value="pt" selected>Português</option>
+					</select>
+				</div>
+			</header>
+
+			<div id="notice" class="notice hidden"></div>
+
+			<section class="card">
+				<div class="progress-line">
+					<div class="progress-labels">
+						<span id="progress-text">0/0</span>
+						<span id="page-text">Página 1/1</span>
+					</div>
+					<div class="progress-bar">
+						<div id="progress-bar-inner"></div>
+					</div>
+				</div>
+				<div class="table-wrapper">
+					<div class="table-headings question-headings">
+						<div><span id="Activity"></span></div>
+						<div class="vote yes" id="yes-label">Respuesta</div>
+					</div>
+					<div id="question-list" class="question-list"></div>
+				</div>
+				<div class="pager">
+					<button id="btn_prev" class="btn-secondary">Anterior</button>
+					<button id="btn_next" class="btn-secondary">Siguiente</button>
+				</div>
+				<div class="cta">
+					<input type="button" value="Procesar resultados" id="btn_procesar"  />
+				</div>
+			</section>
+
+			<section class="results card hidden">
+				<h2 id="results-title">Tus áreas destacadas</h2>
+		 		<div class="areas"></div>
+			</section>
 		</div>
 	</body>
 </html>

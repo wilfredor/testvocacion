@@ -18,7 +18,7 @@ export class Area {
         this._porcent = porcent;
     }
     get id():string {
-        return this.id;
+        return this._id.toString();
     }
     get description():string {
         return this._lang.areas.filter(area => area.id === this._id)[0].description;

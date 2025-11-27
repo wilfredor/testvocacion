@@ -11,7 +11,7 @@ export class Question {
         this._lang = lang;
     }
     get id():string {
-        return this.id;
+        return this._id.toString();
     }
     get description():string {
         return this._lang.questions.filter((question: { id: number; }) => question.id === this._id)[0].description;
