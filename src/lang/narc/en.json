@@ -1,0 +1,63 @@
+{
+  "questions": [
+    { "id": 1, "description": "Enjoys being the center of attention and feels reinforced by admiration." },
+    { "id": 2, "description": "Exaggerates achievements or talents to impress others." },
+    { "id": 3, "description": "Frequently fantasizes about exceptional success, power, or attractiveness." },
+    { "id": 4, "description": "Seeks special treatment or exceptions to rules that apply to everyone." },
+    { "id": 5, "description": "Chooses relationships or groups that elevate status or image." },
+    { "id": 6, "description": "Feels irritated when not recognized as unique or authoritative." },
+    { "id": 7, "description": "Looks for frequent reassurance that they are appreciated or admired." },
+    { "id": 8, "description": "Competes for recognition and constantly compares achievements." },
+    { "id": 9, "description": "Redirects conversations toward self or personal stories with ease." },
+    { "id": 10, "description": "Minimizes others' needs if they conflict with personal goals." },
+    { "id": 11, "description": "Interrupts or overrides others to keep the spotlight." },
+    { "id": 12, "description": "Feels entitled to others' time or loyalty without reciprocity." },
+    { "id": 13, "description": "Keeps score of favors or support to leverage later." },
+    { "id": 14, "description": "Struggles to apologize sincerely when at fault." },
+    { "id": 15, "description": "Reacts defensively or angrily to even mild feedback." },
+    { "id": 16, "description": "Uses charm to influence but withdraws when not admired." },
+    { "id": 17, "description": "Avoids showing vulnerability or asking for help." },
+    { "id": 18, "description": "Feels empty or flat when not receiving attention or praise." },
+    { "id": 19, "description": "Feels envy when others achieve and believes they deserved it less." },
+    { "id": 20, "description": "Thinks others envy them and guards their image carefully." },
+    { "id": 21, "description": "Holds a sense of superiority over most people." },
+    { "id": 22, "description": "Blames circumstances or others more than self when mistakes happen." },
+    { "id": 23, "description": "Relationships strain when others set boundaries or disagree." },
+    { "id": 24, "description": "Swings between feeling exceptional and fearing not being enough." }
+  ],
+  "areas": [
+    { "id": 1, "description": "Admiration seeking" },
+    { "id": 2, "description": "Empathy and boundaries" },
+    { "id": 3, "description": "Self-image and criticism" }
+  ],
+  "carreras": [
+    { "id": 1, "description": "Practice acknowledging others' wins and request specific feedback, not only praise. Therapy can help balance validation needs with genuine connection." },
+    { "id": 2, "description": "Rehearse listening without interrupting, validate others' emotions, and set clear boundaries. Relational or mentalization-focused therapy may help." },
+    { "id": 3, "description": "Work on tolerating mistakes, reframing criticism as data, and building steadier self-esteem. A clinician can guide regulation and self-compassion strategies." }
+  ],
+  "labels": {
+    "AllQuestionsNeedToBeAnswered": "Answer every statement, missing:",
+    "Activity": "Indicator",
+    "HeroEyebrow": "Self-screening",
+    "HeroTitle": "Traits linked to narcissism",
+    "HeroSubtitle": "Not a diagnosis. Use it to notice patterns and decide if you want professional support.",
+    "Yes": "Yes",
+    "No": "No",
+    "ProcessButton": "View profile",
+    "ResultsTitle": "Areas with higher self-reported presence",
+    "Prev": "Previous",
+    "Next": "Next",
+    "Page": "Page",
+    "Answered": "Answered:",
+    "SeeAll": "See all",
+    "SeeLess": "See less",
+    "ShowCareers": "See guidance",
+    "HideCareers": "Hide guidance",
+    "Language": "Language",
+    "MethodNote": "Self-exploration tool. Not diagnostic. Items draw from clinical criteria and psychoeducation guides to support therapeutic conversations.",
+    "ExportPDF": "Export PDF",
+    "MethodSummaryPrefix": "Answered",
+    "MethodSummaryCode": "Priority areas",
+    "MethodSummaryScoring": "Percent is based on your \"yes\" responses per dimension; more \"yes\" means higher perceived frequency."
+  }
+}

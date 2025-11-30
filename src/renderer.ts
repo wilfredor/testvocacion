@@ -19,6 +19,7 @@ export interface Renderer {
   showPage(page: number, pageSize: number): void;
   getQuestionRows(): NodeListOf<Element>;
   isResultsVisible(): boolean;
+  renderMethodDetail?(lang: Lang, answerStore: AnswerStore): void;
 }
 
 export class DomRenderer implements Renderer {
@@ -41,8 +42,15 @@ export class DomRenderer implements Renderer {
     const nextBtn = qs<HTMLButtonElement>(this.selectors.nextBtn);
     if (prevBtn) prevBtn.textContent = lang.labels.Prev;
     if (nextBtn) nextBtn.textContent = lang.labels.Next;
+    const langLabel = qs(this.selectors.langLabel);
+    if (langLabel) langLabel.textContent = lang.labels.Language;
     const langSelect = qs(this.selectors.langSelect);
     if (langSelect) langSelect.setAttribute("aria-label", lang.labels.Language);
+    const testLabel = qs(this.selectors.testLabel);
+    const testSelect = qs(this.selectors.testSelect);
+    if (testSelect && testLabel?.textContent) {
+      testSelect.setAttribute("aria-label", testLabel.textContent);
+    }
 
     const docTitle = qs<HTMLTitleElement>("title");
     if (docTitle) docTitle.textContent = `${lang.labels.HeroEyebrow} - ${lang.labels.HeroTitle}`;
@@ -182,6 +190,30 @@ export class DomRenderer implements Renderer {
     methodNote.className = "method-note";
     methodNote.textContent = this.buildMethodSummary(areas, counts, lang, answerStore);
     results?.appendChild(methodNote);
+
+    if (lang.labels.MethodDetail) {
+      const detail = document.createElement("div");
+      detail.className = "method-detail";
+      detail.textContent = lang.labels.MethodDetail;
+      results?.appendChild(detail);
+    }
+
+    if (lang.labels.MethodReferences && lang.labels.MethodReferences.length > 0) {
+      const refs = document.createElement("div");
+      refs.className = "method-refs";
+      const title = document.createElement("p");
+      title.className = "method-refs-title";
+      title.textContent = lang.labels.MethodReferencesTitle || "Referencias";
+      refs.appendChild(title);
+      const list = document.createElement("ul");
+      lang.labels.MethodReferences.forEach((ref) => {
+        const li = document.createElement("li");
+        li.textContent = ref;
+        list.appendChild(li);
+      });
+      refs.appendChild(list);
+      results?.appendChild(refs);
+    }
 
     if (resultsSection) {
       resultsSection.classList.remove("hidden");

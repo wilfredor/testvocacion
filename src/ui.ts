@@ -12,6 +12,9 @@ export type UiSelectors = {
   yesLabel: string;
   resultsTitle: string;
   langSelect: string;
+  testSelect: string;
+  langLabel: string;
+  testLabel: string;
   areasContainer: string;
   resultsSection: string;
   notice: string;
@@ -31,6 +34,9 @@ export const UI: UiSelectors = {
   yesLabel: "#yes-label",
   resultsTitle: "#results-title",
   langSelect: "#lang",
+  testSelect: "#test-type",
+  langLabel: "#lang-label",
+  testLabel: "#test-label",
   areasContainer: ".areas",
   resultsSection: ".results",
   notice: "#notice",

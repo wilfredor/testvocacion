@@ -39,6 +39,9 @@ export type LangLabels = {
   HideCareers: string;
   SeeAll?: string;
   SeeLess?: string;
+  MethodDetail?: string;
+  MethodReferencesTitle?: string;
+  MethodReferences?: string[];
 };
 
 export type Lang = {

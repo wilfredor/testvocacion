@@ -1,0 +1,63 @@
+{
+  "questions": [
+    { "id": 1, "description": "Gosta de ser o centro das atenções e se sente reforçado pela admiração." },
+    { "id": 2, "description": "Exagera conquistas ou talentos para impressionar outras pessoas." },
+    { "id": 3, "description": "Fantasia com frequência sobre sucesso, poder ou atratividade excepcionais." },
+    { "id": 4, "description": "Busca tratamento especial ou exceções a regras que valem para todos." },
+    { "id": 5, "description": "Prefere relações ou grupos que elevem seu status ou imagem." },
+    { "id": 6, "description": "Fica irritado quando não o reconhecem como alguém único ou com autoridade." },
+    { "id": 7, "description": "Busca confirmação frequente de que é apreciado ou admirado." },
+    { "id": 8, "description": "Compete por reconhecimento e se compara o tempo todo." },
+    { "id": 9, "description": "Redireciona conversas para si mesmo ou suas histórias com facilidade." },
+    { "id": 10, "description": "Minimiza necessidades dos outros se elas conflitam com suas metas." },
+    { "id": 11, "description": "Interrompe ou se impõe para manter o protagonismo." },
+    { "id": 12, "description": "Sente-se no direito do tempo ou lealdade dos outros sem reciprocidade." },
+    { "id": 13, "description": "Mantém um placar de favores ou apoios para usar depois." },
+    { "id": 14, "description": "Tem dificuldade para se desculpar de forma sincera quando erra." },
+    { "id": 15, "description": "Reage de forma defensiva ou com raiva a feedbacks leves." },
+    { "id": 16, "description": "Usa charme para influenciar, mas se afasta quando não é admirado." },
+    { "id": 17, "description": "Evita mostrar vulnerabilidade ou pedir ajuda." },
+    { "id": 18, "description": "Sente-se vazio ou apagado quando não recebe atenção ou elogios." },
+    { "id": 19, "description": "Sente inveja quando outros conquistam algo e acha que mereciam menos." },
+    { "id": 20, "description": "Acredita que os outros o invejam e cuida bastante da própria imagem." },
+    { "id": 21, "description": "Mantém uma sensação de superioridade em relação à maioria das pessoas." },
+    { "id": 22, "description": "Culpa mais as circunstâncias ou outros do que a si mesmo quando erra." },
+    { "id": 23, "description": "Os relacionamentos ficam tensos quando outros colocam limites ou discordam." },
+    { "id": 24, "description": "Oscila entre sentir-se excepcional e temer não ser suficiente." }
+  ],
+  "areas": [
+    { "id": 1, "description": "Busca de admiração" },
+    { "id": 2, "description": "Empatia e limites" },
+    { "id": 3, "description": "Autoimagem e crítica" }
+  ],
+  "carreras": [
+    { "id": 1, "description": "Pratique reconhecer conquistas de outros e peça feedback específico, não só elogios. A terapia pode ajudar a equilibrar validação com conexões genuínas." },
+    { "id": 2, "description": "Treine ouvir sem interromper, validar emoções alheias e definir limites claros. Terapia relacional ou focada em mentalização pode ajudar." },
+    { "id": 3, "description": "Trabalhe em tolerar erros, ver críticas como dados e construir autoestima mais estável. Um profissional pode guiar estratégias de regulação e autocompaixão." }
+  ],
+  "labels": {
+    "AllQuestionsNeedToBeAnswered": "Responda todas as afirmações, falta:",
+    "Activity": "Indicador",
+    "HeroEyebrow": "Autoavaliação",
+    "HeroTitle": "Traços ligados ao narcisismo",
+    "HeroSubtitle": "Não é diagnóstico. Use para notar padrões e decidir se quer apoio profissional.",
+    "Yes": "Sim",
+    "No": "Não",
+    "ProcessButton": "Ver perfil",
+    "ResultsTitle": "Áreas com maior presença relatada",
+    "Prev": "Anterior",
+    "Next": "Próximo",
+    "Page": "Página",
+    "Answered": "Respondidas:",
+    "SeeAll": "Ver todas",
+    "SeeLess": "Ver menos",
+    "ShowCareers": "Ver recomendações",
+    "HideCareers": "Ocultar recomendações",
+    "Language": "Idioma",
+    "MethodNote": "Ferramenta de autoexploração. Não diagnóstica. Itens baseados em critérios clínicos e guias psicoeducativas para apoiar conversas terapêuticas.",
+    "ExportPDF": "Exportar PDF",
+    "MethodSummaryPrefix": "Respondidas",
+    "MethodSummaryCode": "Áreas prioritárias",
+    "MethodSummaryScoring": "A porcentagem se baseia nas respostas \"sim\" por dimensão; mais afirmações indicam maior frequência percebida."
+  }
+}

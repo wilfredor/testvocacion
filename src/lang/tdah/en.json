@@ -1,0 +1,63 @@
+{
+  "questions": [
+    { "id": 1, "description": "Misses details or makes careless mistakes when reading or reviewing work." },
+    { "id": 2, "description": "Finds it hard to sustain attention in tasks, meetings, or long reading." },
+    { "id": 3, "description": "Loses track of steps when interrupted and struggles to resume." },
+    { "id": 4, "description": "Frequently misplaces essentials (keys, phone, cards, badges)." },
+    { "id": 5, "description": "Underestimates or overestimates time; often late or far too early." },
+    { "id": 6, "description": "Avoids tasks that demand sustained mental effort (planning, forms, long emails)." },
+    { "id": 7, "description": "Starts tasks but leaves them half-finished unless supervised or reminded." },
+    { "id": 8, "description": "Forgets appointments or deadlines without external reminders." },
+    { "id": 9, "description": "Feels restless or fidgety and needs to change posture frequently." },
+    { "id": 10, "description": "Talks a lot or blurts out answers before questions finish." },
+    { "id": 11, "description": "Interrupts conversations or finishes other people's sentences." },
+    { "id": 12, "description": "Struggles to wait turns in lines, meetings, or games." },
+    { "id": 13, "description": "Acts on impulses (buying, messaging, deciding) and regrets it afterward." },
+    { "id": 14, "description": "Leaves a task to jump into another when bored, even if the first was important." },
+    { "id": 15, "description": "Chases new ideas or projects and drops current ones abruptly." },
+    { "id": 16, "description": "Needs to move (walk, tap, stretch) to stay focused." },
+    { "id": 17, "description": "Hyperfocuses on interesting tasks and loses track of time or basic needs." },
+    { "id": 18, "description": "Mood shifts quickly across the day depending on stimulation or stress." },
+    { "id": 19, "description": "Gets irritated easily by delays, noise, or changes to plans." },
+    { "id": 20, "description": "Has difficulty winding down to sleep because the mind keeps racing." },
+    { "id": 21, "description": "Organizational systems collapse quickly; clutter piles up." },
+    { "id": 22, "description": "Needs external prompts (timers, people) to start or finish tasks." },
+    { "id": 23, "description": "Reacts strongly to minor setbacks or criticism." },
+    { "id": 24, "description": "Prioritizes poorly; spends time on low-impact tasks while urgent ones wait." }
+  ],
+  "areas": [
+    { "id": 1, "description": "Inattention" },
+    { "id": 2, "description": "Hyperactivity / Impulsivity" },
+    { "id": 3, "description": "Regulation & executive function" }
+  ],
+  "carreras": [
+    { "id": 1, "description": "Use visual checklists, time estimates, and reduce distractions. Long-form tasks: break into steps and batch reminders. Seek clinical input if this impacts daily functioning." },
+    { "id": 2, "description": "Plan movement breaks, practice pause-breathe-choose before acting, and rehearse conversational turns. Clinical support can help with impulsivity and restlessness." },
+    { "id": 3, "description": "Timebox work (Pomodoro), set external starters/finishers, and log small wins. A specialist can tailor strategies for sleep hygiene, emotion regulation, and prioritization." }
+  ],
+  "labels": {
+    "AllQuestionsNeedToBeAnswered": "You need to answer every statement, missing:",
+    "Activity": "Indicator",
+    "HeroEyebrow": "Self-screening",
+    "HeroTitle": "Adult ADHD-related signs",
+    "HeroSubtitle": "Not a diagnosis. Use it to spot patterns and discuss them with a clinician.",
+    "Yes": "Yes",
+    "No": "No",
+    "ProcessButton": "View profile",
+    "ResultsTitle": "Areas where you report more symptoms",
+    "Prev": "Previous",
+    "Next": "Next",
+    "Page": "Page",
+    "Answered": "Answered:",
+    "SeeAll": "See all",
+    "SeeLess": "See less",
+    "ShowCareers": "See guidance",
+    "HideCareers": "Hide guidance",
+    "Language": "Language",
+    "MethodNote": "Personal screening tool. Not a diagnosis. Draws on DSM-5/ASRS-informed items and executive-function checklists to support clinical conversations.",
+    "ExportPDF": "Export PDF",
+    "MethodSummaryPrefix": "Answered",
+    "MethodSummaryCode": "Priority areas",
+    "MethodSummaryScoring": "Percent is based on your \"yes\" responses per dimension; more \"yes\" means higher reported frequency."
+  }
+}

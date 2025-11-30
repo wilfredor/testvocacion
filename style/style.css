@@ -61,6 +61,13 @@ h1 {
   max-width: 620px;
 }
 
+.hero-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  min-width: 220px;
+}
+
 .lang-switcher {
   display: grid;
   gap: 6px;
@@ -404,6 +411,38 @@ img {
   color: #2f3a4b;
   line-height: 1.4;
   font-size: 14px;
+}
+
+.method-detail {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #eef2f7;
+  color: #1b1f2a;
+  line-height: 1.45;
+  font-size: 14px;
+  border: 1px solid rgba(27, 31, 42, 0.12);
+}
+
+.method-refs {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fdfdfd;
+  border: 1px solid rgba(27, 31, 42, 0.08);
+}
+
+.method-refs-title {
+  margin: 0 0 6px;
+  font-weight: 700;
+  color: #1f4b99;
+}
+
+.method-refs ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #2f3a4b;
+  line-height: 1.45;
 }
 
 .area-card {

@@ -1,0 +1,63 @@
+{
+  "questions": [
+    { "id": 1, "description": "Deixa passar detalhes ou comete erros por descuido ao ler ou revisar trabalho." },
+    { "id": 2, "description": "Tem dificuldade para sustentar atenção em tarefas, reuniões ou leituras longas." },
+    { "id": 3, "description": "Perde o fio dos passos quando é interrompido e demora a retomar." },
+    { "id": 4, "description": "Perde com frequência itens essenciais (chaves, celular, cartões, crachá)." },
+    { "id": 5, "description": "Subestima ou superestima o tempo; chega tarde ou cedo demais." },
+    { "id": 6, "description": "Evita tarefas que exigem esforço mental prolongado (planejamento, formulários, e-mails longos)." },
+    { "id": 7, "description": "Inicia tarefas e as deixa pela metade se não houver supervisão ou lembretes." },
+    { "id": 8, "description": "Esquece compromissos ou prazos sem lembretes externos." },
+    { "id": 9, "description": "Sente-se inquieto ou se mexe muito e precisa mudar de postura frequentemente." },
+    { "id": 10, "description": "Fala muito ou responde antes de a pergunta ser concluída." },
+    { "id": 11, "description": "Interrompe conversas ou termina as frases de outras pessoas." },
+    { "id": 12, "description": "Tem dificuldade para esperar sua vez em filas, reuniões ou jogos." },
+    { "id": 13, "description": "Age por impulso (compras, mensagens, decisões) e depois se arrepende." },
+    { "id": 14, "description": "Abandona uma tarefa para começar outra quando se entedia, mesmo que a primeira fosse importante." },
+    { "id": 15, "description": "Corre atrás de novas ideias ou projetos e larga os atuais de forma abrupta." },
+    { "id": 16, "description": "Precisa se mover (andar, bater, alongar) para manter o foco." },
+    { "id": 17, "description": "Hiperfocaliza em tarefas interessantes e perde a noção do tempo ou de necessidades básicas." },
+    { "id": 18, "description": "O humor muda rápido ao longo do dia conforme estímulos ou estresse." },
+    { "id": 19, "description": "Irrita-se facilmente com atrasos, barulho ou mudanças de plano." },
+    { "id": 20, "description": "Tem dificuldade para desacelerar e dormir porque a mente continua acelerada." },
+    { "id": 21, "description": "Seus sistemas de organização desmoronam rápido; a bagunça se acumula." },
+    { "id": 22, "description": "Precisa de gatilhos externos (temporizadores, pessoas) para iniciar ou terminar tarefas." },
+    { "id": 23, "description": "Reage com intensidade a pequenos contratempos ou críticas." },
+    { "id": 24, "description": "Prioriza mal: passa tempo em tarefas de baixo impacto enquanto as urgentes esperam." }
+  ],
+  "areas": [
+    { "id": 1, "description": "Desatenção" },
+    { "id": 2, "description": "Hiperatividade / Impulsividade" },
+    { "id": 3, "description": "Regulação e função executiva" }
+  ],
+  "carreras": [
+    { "id": 1, "description": "Use checklists visuais, estime tempos e reduza distrações. Em tarefas longas: divida em passos e agrupe lembretes. Procure avaliação clínica se isso impacta o cotidiano." },
+    { "id": 2, "description": "Planeje pausas de movimento, pratique pausar-respirar-escolher antes de agir e treine turnos em conversas. Apoio clínico pode ajudar na impulsividade e inquietação." },
+    { "id": 3, "description": "Timeboxing (Pomodoro), gatilhos para começar/terminar e registro de pequenos avanços. Um especialista pode ajustar estratégias de sono, regulação emocional e priorização." }
+  ],
+  "labels": {
+    "AllQuestionsNeedToBeAnswered": "Responda todas as afirmações, falta:",
+    "Activity": "Indicador",
+    "HeroEyebrow": "Autoavaliação",
+    "HeroTitle": "Sinais associados ao TDAH em adultos",
+    "HeroSubtitle": "Não é diagnóstico. Use para notar padrões e discuti-los com um profissional.",
+    "Yes": "Sim",
+    "No": "Não",
+    "ProcessButton": "Ver perfil",
+    "ResultsTitle": "Áreas com mais sintomas relatados",
+    "Prev": "Anterior",
+    "Next": "Próximo",
+    "Page": "Página",
+    "Answered": "Respondidas:",
+    "SeeAll": "Ver todas",
+    "SeeLess": "Ver menos",
+    "ShowCareers": "Ver recomendações",
+    "HideCareers": "Ocultar recomendações",
+    "Language": "Idioma",
+    "MethodNote": "Ferramenta de triagem pessoal. Não diagnóstica. Combina itens inspirados em DSM-5/ASRS e listas de funções executivas para apoiar a conversa clínica.",
+    "ExportPDF": "Exportar PDF",
+    "MethodSummaryPrefix": "Respondidas",
+    "MethodSummaryCode": "Áreas prioritárias",
+    "MethodSummaryScoring": "A porcentagem se baseia nas respostas \"sim\" em cada dimensão; mais afirmações indicam maior frequência relatada."
+  }
+}
